@@ -116,6 +116,9 @@
                             </tr>
                             </table>
                      </t>
+                     <t t-else="">
+                        <p style="font-size: 32px;font-weight: bold;text-align: center;color: #FF6347;font-style: italic;margin-top: 10px;">This record is not a booking order.</p>
+                    </t>
                     </div>
                 </t>
             </t>

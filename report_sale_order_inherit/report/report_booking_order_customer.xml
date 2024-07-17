@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
+    <!--new paper format-->
+        <record model="report.paperformat" id="booking_order_paperformat">
+            <field name="name">Booking Order Format</field>
+            <field name="default" eval="True" />
+            <field name="format">A5</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">7</field>
+            <field name="margin_bottom">7</field>
+            <field name="margin_left">5</field>
+            <field name="margin_right">5</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">2</field>
+            <field name="dpi">90</field>
+        </record>
 
     <record id="report_sale_order_booking_order_customer" model="ir.actions.report">
         <field name="name">Print Booking Order</field>
@@ -7,209 +23,101 @@
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">report_sale_order_inherit.report_booking_order_customer</field>
         <field name="report_file">report_sale_order_inherit.report_booking_order_customer</field>
-        <field name="binding_model_id" ref="model_sale_order"/>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="paperformat_id" ref="report_sale_order_inherit.booking_order_paperformat"/>
         <field name="binding_type">report</field>
     </record>
 
     <template id="report_booking_order_customer">
-        <t t-call="web.html_container">
-            <t t-foreach="docs" t-as="student">
-                <t t-call="web.external_layout">
-                    <div class="page">
-                        <style>
-                            body {padding:0px !important; margin:0px !important;}
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.basic_layout">
+                    <div style="padding-bottom: 5px; border-bottom: 2px solid black;">
+                        <table width="100%" style="color:black;">
+                            <tr>
+                                <th width="50%">
+                                    <img t-att-src="image_data_uri(o.company_id.logo)" style="max-height: 100px;"/>
+                                </th>
+                                <th width="50%" class="text-right" style="padding-right: 5px; vertical-align: top;">
+                                    <span style="font-size: 32px;">Booking Order Report</span><br/>
+                                    <span style="font-size: 28px;" t-field="o.name"/>
+                                    <br/>
+                                    Last Updated :<span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d %B %Y %H:%M:%S')"/>
+                                </th>
+                            </tr>
+                        </table>
+                    </div>
 
-                            .avatar {
-                                position: relative;
-                                left: 590px;
-                                width: 150px;
-                                height:150px;
-                                bottom:100px;
-                                background-size: cover; /* Ensures the image will cover the entire element */
-                                background-position: top center; /* Centers the image */
-                            }
-                            table {
-                                position:relative;
-                                left:50px;
-                                width:75%;
-                                bottom:50px;
-                            }
-                            .borderless td, .borderless th, .borderless tr {
-                                border: 1px solid white;
-                            }
-                        </style>
-                        <div style="height:100%; width:100%;">
-                            <div style="display:flex;left:50px;position:relative">
-                                <h3><span t-if="student.name" t-field="student.name"
-                                  style="font-size:35px; text-align:center; color:black; white-space:nowrap;position:relative;bottom:20px"/></h3>
-                                 <br/>
-                                <span t-if="student.nickname" t-field="student.nickname"
-                                  style="font-size:35px;text-align:center;color:black; white-space:nowrap;"/>
-                                <t t-if="student.image_1920">
-                                    <div class="avatar"
-                                     t-att-style="'background-image: url(' + image_data_uri(student.image_1920) + ');'"/>
-                                </t>
-                            </div>
-                            <table class="table borderless">
-                                <tr>
-                                    <td>NIK (Nomor Induk Kependudukan)</td>
-                                    <td>:</td>
-                                    <td><span t-if="student.id_card_number" t-field="student.id_card_number"/></td>
-                                </tr>
-                                <tr>
-                                    <td>Lokasi</td>
-                                    <td>:</td>
-                                    <td><span t-if="student.class_id" t-field="student.class_id.name"/></td>
-                                </tr>
-                                <tr>
-                                    <td>Jenis Kelamin</td>
-                                    <td>:</td>
-                                    <td><span t-if="student.gender" t-field="student.gender"/></td>
-                                </tr>
-                                <tr>
-                                    <td>Tempat Lahir</td>
-                                    <td>:</td>
-                                    <td><span t-if="student.birth_place" t-field="student.birth_place"/></td>
-                                </tr>
-                                <tr>
-                                    <td>Kabupaten Kelahiran</td>
-                                    <td>:</td>
-                                    <td><span t-if="student.address_student" t-field="student.address_student"/></td>
-                                </tr>
-                                <tr>
-                                    <td>Tanggal Lahir</td>
-                                    <td>:</td>
-                                    <td><span t-if="student.birth_date" t-field="student.birth_date"/></td>
-                                </tr>
-                                <tr>
-                                    <td>Umur</td>
-                                    <td>:</td>
-                                    <td><span t-if="student.age" t-field="student.age"/> Tahun</td>
-                                </tr>
-                                <tr>
-                                    <td>Alamat</td>
-                                    <td>:</td>
-                                    <td><span t-if="student.address_student" t-field="student.address_student"/>
-                                    <span t-if="student.birth_place" t-field="student.birth_place"/> , <br/>
-                                    <span t-if="student.zip" t-field="student.zip"/> ,
-                                    <span t-if="student.state_id" t-field="student.state_id"/> , <span t-if="student.zip" t-field="student.zip"/> , <span t-if="student.country_id" t-field="student.country_id"/>
+                 <div class="page">
+                     <t t-if ="o.is_booking">
+                        <div class="oe_structure"/>
+                        <table width="100%">
+                            <tr>
+                                <th style="padding-top: 10px">Customer Name</th>
+                                <th class="text-center" style="padding-top: 10px;">:</th>
+                                    <td style="padding-top: 10px">
+                                        <span t-field="o.partner_id.name"/>
                                     </td>
-                                </tr>
-                                <tr>
-                                    <td>Status Aktif</td>
-                                    <td>:</td>
-                                    <td><span t-if="student.status" t-field="student.status"/></td>
-                                </tr>
-                                <tr>
-                                    <td>Agama</td>
-                                    <td>:</td>
-                                    <td><span t-if="student.religion" t-field="student.religion"/></td>
-                                </tr>
-                                <tr>
-                                    <td>Nilai</td>
-                                    <td>:</td>
-                                    <t t-if="student.grade">
-                                        <td>Bagus</td>
-                                    </t>
-                                    <t t-else="">
-                                        <td>Kurang</td>
-                                    </t>
-                                </tr>
-                                <tr>
-                                    <td>ID Kartu</td>
-                                    <td>:</td>
-                                    <td><span t-if="student.barcode" t-field="student.barcode"/></td>
-                                </tr>
-                                <tr>
-                                    <td>Tinggi (cm)</td>
-                                    <td>:</td>
-                                    <td><span t-if="student.height" t-field="student.height"/></td>
-                                </tr>
-                                <tr>
-                                    <td>Berat (kg)</td>
-                                    <td>:</td>
-                                    <td><span t-if="student.weight" t-field="student.weight"/></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3"><h3>Data Orang Tua</h3></td>
-                                </tr>
-                                <tr>
-                                    <td>Ayah</td>
-                                    <td>:</td>
-                                    <td><span t-if="student.father_id" t-field="student.father_id.name"/></td>
-                                </tr>
-                                <tr>
-                                    <td>Tanggal Lahir Ayah</td>
-                                    <td>:</td>
-                                    <td><span t-if="student.father_birth_date" t-field="student.father_birth_date"/></td>
-                                </tr>
-                                <tr>
-                                    <td>Umur Ayah</td>
-                                    <td>:</td>
-                                    <td><span t-if="student.father_age" t-field="student.father_age"/></td>
-                                </tr>
-                                <tr>
-                                    <td>Pendidikan</td>
-                                    <td>:</td>
-                                    <td><span t-if="student.father_education" t-field="student.father_education"/></td>
-                                </tr>
-                                <tr>
-                                    <td>Pekerjaan Ayah</td>
-                                    <td>:</td>
-                                    <td><span t-if="student.father_job" t-field="student.father_job.name"/></td>
-                                </tr>
-                                <tr>
-                                    <td>Ayah Meninggal</td>
-                                    <td>:</td>
-                                    <t t-if="student.father_died">
-                                        <td>Ya</td>
-                                    </t>
-                                    <t t-else="">
-                                        <td>-</td>
-                                    </t>
-                                </tr>
-                                <tr>
-                                    <td>Ibu</td>
-                                    <td>:</td>
-                                    <td><span t-if="student.mother_id" t-field="student.mother_id.name"/></td>
-                                </tr>
-                                <tr>
-                                    <td>Tanggal Lahir Ibu</td>
-                                    <td>:</td>
-                                    <td><span t-if="student.mother_birth_date" t-field="student.mother_birth_date"/></td>
-                                </tr>
-                                <tr>
-                                    <td>Umur Ibu</td>
-                                    <td>:</td>
-                                    <td><span t-if="student.mother_age" t-field="student.mother_age"/></td>
-                                </tr>
-                                <tr>
-                                    <td>Pendidikan</td>
-                                    <td>:</td>
-                                    <td><span t-if="student.mother_education" t-field="student.mother_education"/></td>
-                                </tr>
-                                <tr>
-                                    <td>Pekerjaan</td>
-                                    <td>:</td>
-                                    <td><span t-if="student.mother_job" t-field="student.mother_job.name"/></td>
-                                </tr>
-                                <tr>
-                                    <td>Ibu Meninggal</td>
-                                    <td>:</td>
-                                    <t t-if="student.mother_died">
-                                        <td>Ya</td>
-                                    </t>
-                                    <t t-else="">
-                                        <td>-</td>
-                                    </t>
-                                </tr>
+                            </tr>
+                            <tr>
+                                <th style="padding-top: 10px">Quotation Template</th>
+                                <th class="text-center" style="padding-top: 10px">:</th>
+                                    <td style="padding-top: 10px">
+                                        <span t-field="o.sale_order_template_id.name"/>
+                                    </td>
+                            </tr>
+                            <tr>
+                                <th style="padding-top: 10px">Expiration</th>
+                                <th class="text-center" style="padding-top: 10px">:</th>
+                                    <td style="padding-top: 10px">
+                                        <span t-field="o.validity_date"/>
+                                    </td>
+                            </tr>
                             </table>
-                            <br/>
-                            <p style="position:relative;left:57px">Terakhir Diperbaharui pada <span t-if="student.write_date" t-field="student.write_date"/></p>
-                        </div>
+                            <table width="100%" style="margin-top: 30px">
+                            <tr>
+                                <td style="padding-top: 10px">Quotation Date</td>
+                                <td colspan="2" style="padding-top: 10px;padding-right:120px">
+                                    : <span t-field="o.date_order"/>
+                                </td>
+                                <td style="padding-top: 10px;padding-left:10px">Payment Term</td>
+                                <td style="padding-top: 10px">
+                                    : <span t-field="o.payment_term_id.name"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding-top: 10px">Product</td>
+                                <td colspan ="2" style="padding-top: 10px">
+                                    : <span t-field="o.order_line.product_id.name"/>
+                                </td>
+                                <td style="padding-top: 10px; padding-left: 10px">Quantity</td>
+                                <td style="padding-top: 10px">
+                                    : <span t-field="o.order_line.product_uom_qty"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding-top: 10px">Quantity Booking</td>
+                                <td colspan ="2" style="padding-top: 10px">
+                                    : <span t-field="o.order_line.qty_booking"/>
+                                </td>
+                                <td style="padding-top: 10px; padding-left: 10px">Unit Price</td>
+                                <td style="padding-top: 10px">
+                                    : <span t-field="o.order_line.price_unit"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding-top: 10px">Tax Id</td>
+                                <td colspan ="2" style="padding-top: 10px">
+                                    : <span t-field="o.order_line.tax_id.name"/>
+                                </td>
+                                <td style="padding-top: 10px; padding-left: 10px">Price Subtotal</td>
+                                <td style="padding-top: 10px">
+                                    :<span t-field="o.order_line.price_subtotal"/>
+                                </td>
+                            </tr>
+                            </table>
+                     </t>
                     </div>
                 </t>
             </t>
-        </t>
     </template>
 </odoo>

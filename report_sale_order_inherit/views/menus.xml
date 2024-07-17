@@ -16,5 +16,11 @@
               parent="menu_booking_order_pivot_root"
               action="action_booking_order_pivot"/>
 
+<!--        wizard menu-->
+        <menuitem id="menu_booking_order_report_xlsx"
+                  name="Booking Order Report Xlsx"
+                  parent="sale.menu_sale_report"
+                  />
+
     </data>
 </odoo>

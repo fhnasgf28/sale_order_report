@@ -14,15 +14,15 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'product', 'stock', 'purchase','sale_management', 'sale_order_inherit'],
+    'depends': ['base', 'product', 'stock', 'purchase','sale_management', 'sale_order_inherit', 'report_xlsx'],
 
     # always loaded
     'data': [
         "security/ir.model.access.csv",
-        # "views/sale_report_booking_order_pivot.xml",
+        "views/menus.xml",
         "report/report_booking_order_customer.xml",
         "views/booking_order_pivot_views.xml",
-        "views/menus.xml",
+        "wizard/report_booking_order_excel/report_booking_order_wizard.xml",
 
     ],
     'installable': True,

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_booking_order_report_wizard" model="ir.ui.view">
+        <field name="name">booking.order.report.wizard.form</field>
+        <field name="model">booking.order.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Booking order Report Wizard">
+                    <group>
+                        <label for="from_date" string="Periode"/>
+                        <div class="o_row">
+                            <field name="from_date" widget="daterange" options="{'related_end_date': 'to_date'}"/>
+                            <span> to </span>
+                            <field name="to_date" widget="daterange" options="{'related_end_date': 'from_date'}"/>
+                        </div>
+                    </group>
+                    <footer>
+                        <button string="Print Report" type="object" name="action_print_report" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <!--menu action-->
+        <record id="action_booking_order_report_wizard" model="ir.actions.act_window">
+            <field name="name">Print booking order Report</field>
+            <field name="res_model">booking.order.report.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <!--Excel report-->
+        <record id="action_booking_order_report_xlsx" model="ir.actions.report">
+            <field name="name">booking order Report</field>
+            <field name="model">booking.order.report.wizard</field>
+            <field name="report_type">xlsx</field>
+            <field name="report_name">report_sale_order_inherit.booking_order_report_xlsx</field>
+        </record>
+
+        <!--        submenu wizard -->
+        <menuitem id="submenu_booking_order_report_xlsx"
+                  name="Booking Order Report Xlsx"
+                  parent="menu_booking_order_report_xlsx"
+                  action="action_booking_order_report_wizard"/>
+    </data>
+</odoo>

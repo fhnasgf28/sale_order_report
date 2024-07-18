@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <data>
+        <!--parent Pivot-->
         <menuitem id="menu_booking_order_pivot_root"
               name="Booking Order Pivot"
               parent="sale.menu_sale_report"
              />
-
-         <menuitem id="menu_booking_order_pivot"
-              name="Booking Order Pivot"
-              parent="menu_booking_order_pivot_root"
-              action="action_booking_order_pivot"/>
 
         <!--wizard menu xlsx-->
         <menuitem id="menu_booking_order_report_xlsx"

@@ -14,9 +14,14 @@
 
     <record id="action_booking_order_pivot" model="ir.actions.act_window">
         <field name="name">Booking Order Pivot</field>
+        <field name="type">ir.actions.act_window</field>
         <field name="res_model">booking.order.pivot</field>
         <field name="view_mode">pivot</field>
         <field name="view_id" ref="view_booking_order_pivot"/>
     </record>
 
+    <menuitem id="menu_booking_order_pivot"
+              name="Booking Order Pivot"
+              parent="menu_booking_order_pivot_root"
+              action="action_booking_order_pivot"/>
 </odoo>

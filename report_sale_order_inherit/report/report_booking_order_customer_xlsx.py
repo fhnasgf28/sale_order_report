@@ -46,21 +46,4 @@ class SaleBookingOrderXlsx(models.Model):
 
                 row += 1
 
-        #     # Table 2: Order Lines
-        #     row += 2
-        #     sheet.write(row, 0, 'Product', header_format)
-        #     sheet.write(row, 1, 'Quantity', header_format)
-        #     sheet.write(row, 2, 'Price Unit After Tax', header_format)
-        #     sheet.write(row, 3, 'Subtotal', header_format)
-        #
-        # row += 1
-        # for order in orders:
-        #     for line in order.booking_line_ids:
-        #         col = 0
-        #         sheet.write(row, col, line.product_id.name)
-        #         sheet.write(row, col + 1, line.product_uom_qty)
-        #         sheet.write(row, col + 2, line.price_unit_tax)
-        #         sheet.write(row, col + 3, line.price_subtotal)
-        #         row += 1
-
         sheet.set_column(0, 0, 30)

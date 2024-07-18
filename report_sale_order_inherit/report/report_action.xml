@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <!--Excel report-->
+        <record id="report_sale_order_booking_order_xlsx" model="ir.actions.report">
+            <field name="name">Print Booking Order Xlsx</field>
+            <field name="model">sale.order</field>
+            <field name="report_type">xlsx</field>
+            <field name="report_name">report_sale_order_inherit.report_booking_order_xlsx</field>
+            <field name="report_file">report_sale_order_inherit.report_booking_order_xlsx</field>
+            <field name="binding_model_id" ref="sale.model_sale_order"/>
+            <field name="binding_type">report</field>
+        </record>
+
+    </data>
+</odoo>

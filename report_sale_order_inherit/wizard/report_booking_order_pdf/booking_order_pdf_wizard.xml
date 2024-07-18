@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <data>
-        <record id="view_booking_order_report_wizard" model="ir.ui.view">
-        <field name="name">booking.order.report.wizard.form</field>
-        <field name="model">booking.order.report.wizard</field>
+        <record id="view_booking_order_report_wizard_pdf" model="ir.ui.view">
+        <field name="name">booking.report.wizardpdf.form</field>
+        <field name="model">booking.report.wizardpdf</field>
         <field name="arch" type="xml">
             <form string="Booking order Report Wizard">
                     <group>
@@ -23,18 +23,20 @@
         </record>
 
         <!--menu action-->
-        <record id="action_booking_order_report_wizard" model="ir.actions.act_window">
+        <record id="action_booking_order_report_wizard_pdf" model="ir.actions.act_window">
+            <field name="type">ir.actions.act_window</field>
             <field name="name">Print booking order Report</field>
-            <field name="res_model">booking.order.report.wizard</field>
+            <field name="res_model">booking.report.wizardpdf</field>
+             <field name="view_id" ref="view_booking_order_report_wizard_pdf"/>
             <field name="view_mode">form</field>
             <field name="target">new</field>
         </record>
 
 
         <!--        submenu wizard -->
-        <menuitem id="submenu_booking_order_report_xlsx"
-                  name="Booking Order Report Xlsx"
-                  parent="menu_booking_order_report_xlsx"
-                  action="action_booking_order_report_wizard"/>
+        <menuitem id="submenu_booking_order_report_pdf"
+                  name="Booking Order Report Pdf"
+                  parent="menu_booking_order_report_pdf"
+                  action="action_booking_order_report_wizard_pdf"/>
     </data>
 </odoo>

@@ -19,10 +19,13 @@
     # always loaded
     'data': [
         "security/ir.model.access.csv",
+        "report/report_action.xml",
         "views/menus.xml",
         "report/report_booking_order_customer.xml",
         "views/booking_order_pivot_views.xml",
         "wizard/report_booking_order_excel/report_booking_order_wizard.xml",
+        "wizard/report_booking_order_pdf/booking_order_pdf_wizard.xml",
+        "report/booking_order_pdf_template.xml",
 
     ],
     'installable': True,

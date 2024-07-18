@@ -1,5 +1,6 @@
 from odoo import models, fields
 
+
 class BookingOrderPivot(models.Model):
     _name = 'booking.order.pivot'
     _auto = False

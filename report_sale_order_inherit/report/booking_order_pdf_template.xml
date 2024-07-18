@@ -9,40 +9,18 @@
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>No. Booking Order:</th>
+                                    <th>Order Id:</th>
                                     <th>Customer:</th>
                                     <th>Transaction Date:</th>
                                     <th>Total Sales:</th>
                                 </tr>
                             </thead>
-                            <t t-set="sorted_datarange" t-value="sorted(datarange, key=lambda l: l['date_booking'])"/>
-                            <t t-foreach="sorted_datarange" t-as="line">
+                            <t t-foreach="docs" t-as="line">
                                 <tr>
-                                    <td><span t-esc="line['reference']"/></td>
-                                    <td><span t-esc="line['date_booking']"/></td>
-                                    <td><span t-esc="line['customer_id']"/></td>
-                                    <td><span t-esc="line['amount_total']"/></td>
-                                </tr>
-                            </t>
-                        </table>
-                    </div>
-                    <h2>Booking Order Lines</h2>
-                    <div class="row">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Product</th>
-                                    <th>Quantity</th>
-                                    <th>Price Unit After Tax</th>
-                                    <th>Subtotal</th>
-                                </tr>
-                            </thead>
-                            <t t-foreach="report_detail" t-as="line">
-                                <tr>
-                                    <td><span t-esc="line['product_id']"/></td>
-                                    <td><span t-esc="line['product_uom_qty']"/></td>
-                                    <td><span t-esc="line['price_unit_tax']"/></td>
-                                    <td><span t-esc="line['price_subtotal']"/></td>
+                                    <td><span t-esc="line['name']"/></td>
+                                    <td><span t-esc="line['date_order']"/></td>
+                                    <td><span t-esc="line['partner_id.name']"/></td>
+                                    <td><span t-esc="line['order_line.price_subtotal']"/></td>
                                 </tr>
                             </t>
                         </table>

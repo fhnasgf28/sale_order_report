@@ -13,9 +13,11 @@ class WizardBookingOrderPdf(models.TransientModel):
         from_date = self.from_date
         to_date = self.to_date
         if from_date:
-            report.append(('date_order', '>=', from_date))
+            report += [('date_order', '>=', from_date)]
         if to_date:
-            report.append(('date_order', '<=', to_date))
+            report += [('date_order', '<=', to_date)]
+
+        report += [('is_booking', '=', True)]
 
         finished_report = self.env['sale.order'].search_read(report)
 
@@ -24,7 +26,8 @@ class WizardBookingOrderPdf(models.TransientModel):
             'docs': finished_report,
         }
 
-        report_action = self.env.ref('report_sale_order_inherit.report_booking_order_wizard_pdf').report_action(self,data=data)
+        report_action = self.env.ref('report_sale_order_inherit.report_sale_order_booking_order_pdf').report_action(
+            self, data=data)
         report_action['close_on_report_download'] = True
 
         return report_action
